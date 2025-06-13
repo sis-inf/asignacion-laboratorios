@@ -30,7 +30,8 @@ class PantallaCargarArchivos(QWidget):
         layout.addWidget(titulo, alignment=Qt.AlignLeft)
 
         layout.addLayout(self.crear_seccion("IMPORTAR ESTUDIANTE", "lista de estudiantes"))
-        layout.addLayout(self.crear_seccion("IMPORTAR LABORATORIO", "lista de laboratorios"))
+        layout.addLayout(self.crear_seccion("IMPORTAR LABORATORIO", "lista de grupo de laboratorios"))
+        layout.addLayout(self.crear_seccion("IMPORTAR REGISTROS","lista de registros de horarios"))
 
     def crear_seccion(self, titulo, tipo):
         layout = QVBoxLayout()
