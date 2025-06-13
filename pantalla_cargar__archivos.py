@@ -75,7 +75,14 @@ class PantallaCargarArchivos(QWidget):
             self.mostrar_exito(tipo)
 
     def mostrar_exito(self, tipo):
-        mensaje = "Estudiantes importados correctamente" if "estudiante" in tipo else "Laboratorios importados correctamente"
+        if "estudiante" in tipo:
+            mensaje = "Estudiantes importados correctamente"
+        elif "laboratorio" in tipo:
+             mensaje = "Laboratorios importados correctamente"
+        elif "registro" in tipo:
+            mensaje = "Registros importados correctamente"
+        else:
+             mensaje = "Importación completada"
         QMessageBox.information(self, "Cargar Exitoso", mensaje)
 
     def mostrar_error(self, titulo, detalle):
