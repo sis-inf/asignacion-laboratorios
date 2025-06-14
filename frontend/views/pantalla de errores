@@ -1,0 +1,81 @@
+from PySide6.QtWidgets import (
+    QApplication, QDialog, QVBoxLayout, QLabel, QPushButton, QHBoxLayout
+)
+from PySide6.QtCore import Qt
+import sys
+
+class ErrorDialog(QDialog):
+    def __init__(self, mensaje_error, solucion_sugerida):
+        super().__init__()
+        self.setWindowTitle("Error")
+        self.setFixedSize(400, 200)
+        self.setStyleSheet("background-color: #ffe6e6;")
+
+        layout = QVBoxLayout()
+
+        lbl_error = QLabel(mensaje_error)
+        lbl_error.setStyleSheet("color: red; font-weight: bold; font-size: 16px;")
+        lbl_error.setAlignment(Qt.AlignCenter)
+
+        lbl_solucion = QLabel(solucion_sugerida)
+        lbl_solucion.setAlignment(Qt.AlignCenter)
+        lbl_solucion.setStyleSheet("color: black; font-size: 14px;")
+
+        layout.addWidget(lbl_error)
+        layout.addWidget(lbl_solucion)
+
+        # Botones de acción
+        btn_layout = QHBoxLayout()
+        btn_login = QPushButton("Volver al Login")
+        btn_recuperar = QPushButton("Recuperar Contraseña")
+        btn_registrar = QPushButton("Registrarse")
+
+        btn_layout.addWidget(btn_login)
+        btn_layout.addWidget(btn_recuperar)
+        btn_layout.addWidget(btn_registrar)
+
+        layout.addLayout(btn_layout)
+        self.setLayout(layout)
+
+        # Conectas estos botones a las funciones reales de tu app
+        btn_login.clicked.connect(self.volver_al_login)
+        btn_recuperar.clicked.connect(self.ir_a_recuperar)
+        btn_registrar.clicked.connect(self.ir_a_registro)
+
+    def volver_al_login(self):
+        print("Redirigiendo al login...")
+        self.accept()
+
+    def ir_a_recuperar(self):
+        print("Ir a recuperación de contraseña...")
+        self.accept()
+
+    def ir_a_registro(self):
+        print("Ir al registro de cuenta...")
+        self.accept()
+
+# Simulación de uso
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+
+    # Simula diferentes errores:
+    tipo = "credenciales"
+
+    if tipo == "credenciales":
+        dlg = ErrorDialog("Usuario o contraseña incorrectos.",
+                          "Tienes 3 intentos antes de que tu cuenta sea bloqueada por seguridad.")
+    elif tipo == "bloqueo":
+        dlg = ErrorDialog("Cuenta bloqueada por múltiples intentos fallidos.",
+                          "Contacta al administrador o intenta más tarde.")
+    elif tipo == "email_no_registrado":
+        dlg = ErrorDialog("El correo ingresado no se encuentra en nuestros registros.",
+                          "Intenta con otro o regístrate.")
+    elif tipo == "registro_incompleto":
+        dlg = ErrorDialog("Faltan datos obligatorios.",
+                          "Verifica los campos y vuelve a intentar.")
+    elif tipo == "email_invalido":
+        dlg = ErrorDialog("El formato del correo electrónico no es válido.",
+                          "Ingresa un correo válido como usuario@ejemplo.com")
+
+    dlg.exec()
+    sys.exit()
